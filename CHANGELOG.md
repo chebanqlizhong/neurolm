@@ -1,54 +1,53 @@
-# Changelog
+# 变更记录
 
-All notable changes to this project are documented here.
+本文件记录本项目的所有重要变更。
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
+版本号遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
-## [Unreleased]
+## [未发布]
 
-### Planned
-- Subword (BPE) tokenizer.
-- Resume training from optimizer state, not just weights.
-- Top-p (nucleus) sampling and repetition penalty.
-- Machine-readable per-step metrics (JSONL/CSV).
+### 计划
+- 子词（BPE）分词器。
+- 从优化器状态断点续训，而不仅仅是权重。
+- top-p（核）采样与重复惩罚。
+- 机器可读的逐步指标（JSONL/CSV）。
 
 ## [0.1.0] - 2026-11-10
 
-The first release of NeuroLM: a from-scratch, dependency-light language model
-training system.
+NeuroLM 的首个版本：一个从零实现、依赖极简的语言模型训练系统。
 
-### Added
-- **Autodiff engine** (`neurolm.autograd`): reverse-mode automatic
-  differentiation over a NumPy-backed `Tensor`, with arithmetic, matmul,
-  reshape, transpose, reductions, indexing, `exp`/`log`, and composite nodes
-  for `softmax`, `log_softmax`, `layer_norm`, `gelu`, `embedding` and
-  `cross_entropy`.
-- **Configuration** (`neurolm.config`): typed, validated YAML configs.
-- **Tokenizer** (`neurolm.tokenizer`): byte-level tokenizer with exact UTF-8
-  round-trip and `<bos>`/`<eos>` tokens.
-- **Data pipeline** (`neurolm.data`): token-stream dataset with train/val split
-  and random contiguous block sampling.
-- **Model** (`neurolm.models`): decoder-only transformer with pre-norm residual
-  blocks, causal multi-head attention, GELU feed-forward network and optional
-  weight tying.
-- **Training** (`neurolm.training`): AdamW optimizer with decoupled weight
-  decay, cosine learning-rate schedule with warmup, global-norm gradient
-  clipping, training loop with validation and checkpointing, loss/perplexity
-  evaluation, and temperature/top-k text generation.
-- **CLI** (`neurolm.cli`): `train`, `evaluate`, `generate`, `info` subcommands.
-- **Configs**: `configs/tiny.yaml` and `configs/small.yaml`.
-- **Corpus**: `data/corpus.txt`.
-- **Tooling**: `Makefile`, `scripts/plot_history.py`,
-  `scripts/train_and_sample.sh`, GitHub Actions CI.
-- **Documentation**: `README.md`, `docs/ARCHITECTURE.md`,
-  `docs/GETTING_STARTED.md`, `docs/ROADMAP.md`, `DEVELOPMENT_LOG.md`.
-- **Tests**: 36 tests covering autodiff (including finite-difference gradient
-  checks), data, model, configuration and training.
+### 新增
+- **自动求导引擎**（`neurolm.autograd`）：基于 NumPy 张量 `Tensor` 的反向模式
+  自动微分，支持算术、矩阵乘、reshape、转置、归约、索引、`exp`/`log`，并为
+  `softmax`、`log_softmax`、`layer_norm`、`gelu`、`embedding` 和 `cross_entropy`
+  提供了复合节点。
+- **配置**（`neurolm.config`）：带类型校验的 YAML 配置。
+- **分词器**（`neurolm.tokenizer`）：字节级分词器，UTF-8 精确往返，含
+  `<bos>`/`<eos>` 标记。
+- **数据管道**（`neurolm.data`）：token 流数据集，训练/验证切分与随机连续块采样。
+- **模型**（`neurolm.models`）：decoder-only Transformer，含 pre-norm 残差块、
+  因果多头注意力、GELU 前馈网络以及可选的权重共享。
+- **训练**（`neurolm.training`）：AdamW 优化器（解耦权重衰减）、带预热的余弦
+  学习率调度、全局范数梯度裁剪、带验证与检查点的训练循环、损失/困惑度评估，
+  以及温度/top-k 文本生成。
+- **命令行**（`neurolm.cli`）：`train`、`evaluate`、`generate`、`info` 子命令。
+- **配置**：`configs/tiny.yaml` 和 `configs/small.yaml`。
+- **语料**：`data/corpus.txt`。
+- **工程**：`Makefile`、`scripts/plot_history.py`、`scripts/train_and_sample.sh`、
+  GitHub Actions CI。
+- **文档**：`README.md`、`docs/ARCHITECTURE.md`、`docs/GETTING_STARTED.md`、
+  `docs/ROADMAP.md`、`DEVELOPMENT_LOG.md`。
+- **测试**：36 个测试，覆盖自动求导（含有限差分梯度校验）、数据、模型、配置与训练。
 
-### Changed
-- Repository repurposed from a hello-world demonstration into a language model
-  training system. `hello.py` is retained as a minimal toolchain smoke test.
+### 变更
+- 仓库从 hello-world 演示改造为语言模型训练系统。`hello.py` 保留作为最小的
+  工具链冒烟测试。
+- 全部文档中文化，并使用 Mermaid 图表（架构图、数据流图、时序图、路线图）
+  提升可读性。
+- 命令行帮助、日志、用户可见的报错信息、Makefile/CI 注释全部中文化。
+- 新增中文支持：`data/corpus_zh.txt`（中文语料）、`configs/zh.yaml`
+  （中文配置）与 `make train-zh` 目标。
 
-[Unreleased]: https://github.com/chebanqlizhong/neurolm/compare/v0.1.0...HEAD
+[未发布]: https://github.com/chebanqlizhong/neurolm/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/chebanqlizhong/neurolm/releases/tag/v0.1.0

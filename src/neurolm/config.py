@@ -31,10 +31,10 @@ class ModelConfig:
     def __post_init__(self) -> None:
         if self.d_model % self.n_heads != 0:
             raise ValueError(
-                f"d_model ({self.d_model}) must be divisible by n_heads ({self.n_heads})"
+                f"d_model（{self.d_model}）必须能被 n_heads（{self.n_heads}）整除"
             )
         if self.d_model <= 0 or self.n_layers <= 0:
-            raise ValueError("d_model and n_layers must be positive")
+            raise ValueError("d_model 与 n_layers 必须为正数")
 
     @property
     def head_dim(self) -> int:
@@ -90,7 +90,7 @@ def _build(dc_type: type, payload: dict[str, Any] | None) -> Any:
     known = {f.name: f for f in fields(dc_type)}
     unknown = set(payload) - set(known)
     if unknown:
-        raise ValueError(f"Unknown keys for {dc_type.__name__}: {sorted(unknown)}")
+        raise ValueError(f"{dc_type.__name__} 存在未知配置项：{sorted(unknown)}")
 
     kwargs: dict[str, Any] = {}
     for name, value in payload.items():
@@ -106,7 +106,7 @@ def load_config(path: str | Path) -> RunConfig:
     """Load and validate a YAML run configuration."""
     path = Path(path)
     if not path.exists():
-        raise FileNotFoundError(f"Config not found: {path}")
+        raise FileNotFoundError(f"找不到配置文件：{path}")
     with path.open("r", encoding="utf-8") as handle:
         raw = yaml.safe_load(handle) or {}
     return _build(RunConfig, raw)

@@ -1,13 +1,13 @@
-# NeuroLM small configuration.
+# NeuroLM small 配置。
 #
-# A compact model that trains on a laptop CPU in a couple of minutes. Use it to
-# verify the pipeline end to end before scaling anything up.
+# 一个紧凑的模型，在笔记本 CPU 上几分钟即可训练完成。适合在扩大规模之前
+# 端到端验证整条流水线。
 
 run_name: small
 out_dir: runs
 
 model:
-  vocab_size: 258        # 256 byte values + <bos> + <eos>
+  vocab_size: 258        # 256 个字节值 + <bos> + <eos>
   d_model: 96
   n_heads: 4
   n_layers: 3

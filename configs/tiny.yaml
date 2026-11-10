@@ -1,13 +1,12 @@
-# NeuroLM tiny configuration.
+# NeuroLM tiny 配置。
 #
-# The smallest configuration that still exercises every code path. Ideal for
-# unit tests, CI and quick sanity checks (a few seconds on CPU).
+# 能覆盖所有代码路径的最小配置。适合单元测试、CI 和快速自检（CPU 上几秒钟）。
 
 run_name: tiny
 out_dir: runs
 
 model:
-  vocab_size: 258
+  vocab_size: 258        # 256 个字节值 + <bos> + <eos>
   d_model: 32
   n_heads: 4
   n_layers: 2

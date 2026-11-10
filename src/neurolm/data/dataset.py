@@ -31,12 +31,12 @@ class TokenDataset:
 
     def __init__(self, tokens: np.ndarray, block_size: int, seed: int = 0) -> None:
         if tokens.ndim != 1:
-            raise ValueError("tokens must be a 1-D array")
+            raise ValueError("tokens 必须是一维数组")
         if block_size < 1:
-            raise ValueError("block_size must be >= 1")
+            raise ValueError("block_size 必须 >= 1")
         if tokens.size <= block_size + 1:
             raise ValueError(
-                f"corpus too small: {tokens.size} tokens for block_size={block_size}"
+                f"语料过小：{tokens.size} 个 token，而 block_size={block_size}"
             )
         self.tokens = tokens.astype(np.int64, copy=False)
         self.block_size = block_size
@@ -64,7 +64,7 @@ class TokenDataset:
     ) -> tuple[TokenDataset, TokenDataset]:
         """Tokenize a corpus and return ``(train, validation)`` datasets."""
         if not 0.0 <= val_split < 1.0:
-            raise ValueError("val_split must be in [0, 1)")
+            raise ValueError("val_split 必须落在 [0, 1) 区间")
         tokenizer = ByteTokenizer()
         tokens = tokenizer.read_corpus(path)
         split = int(tokens.size * (1.0 - val_split))

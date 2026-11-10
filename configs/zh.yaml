@@ -1,0 +1,41 @@
+# NeuroLM 中文 small 配置。
+#
+# 在中文语料（data/corpus_zh.txt）上训练。字节级分词下，一个汉字约占三个字节，
+# 因此这里把 block_size 与 max_seq_len 设得比英文配置更大一些。
+
+run_name: zh
+out_dir: runs
+
+model:
+  vocab_size: 258        # 256 个字节值 + <bos> + <eos>
+  d_model: 96
+  n_heads: 4
+  n_layers: 3
+  d_ff: 384
+  max_seq_len: 192
+  dropout: 0.1
+  tie_embeddings: true
+
+data:
+  corpus_path: data/corpus_zh.txt
+  val_split: 0.1
+  batch_size: 8
+  block_size: 192
+  seed: 1337
+
+train:
+  max_steps: 200
+  eval_interval: 25
+  eval_batches: 20
+  learning_rate: 3.0e-3
+  min_lr: 3.0e-4
+  warmup_steps: 30
+  weight_decay: 0.05
+  grad_clip: 1.0
+  beta1: 0.9
+  beta2: 0.99
+  eps: 1.0e-8
+  seed: 1337
+  device: cpu
+
+checkpoint_interval: 200

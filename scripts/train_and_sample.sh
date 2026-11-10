@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Train NeuroLM on a corpus and sample from the result.
+# 在语料上训练 NeuroLM，并从结果采样。
 #
-# Usage:
+# 用法:
 #   scripts/train_and_sample.sh [config] [prompt]
 #
-# Example:
+# 示例:
 #   scripts/train_and_sample.sh configs/small.yaml "The transformer "
 set -euo pipefail
 
@@ -14,13 +14,13 @@ RUN_NAME="$(grep -E '^run_name:' "$CONFIG" | awk '{print $2}')"
 
 export PYTHONPATH="src:${PYTHONPATH:-}"
 
-echo "==> Training with $CONFIG"
+echo "==> 开始训练，配置：$CONFIG"
 python -m neurolm train --config "$CONFIG"
 
-echo "==> Evaluating runs/${RUN_NAME}/final.npz"
+echo "==> 评估 runs/${RUN_NAME}/final.npz"
 python -m neurolm evaluate --config "$CONFIG" --checkpoint "runs/${RUN_NAME}/final.npz"
 
-echo "==> Sampling"
+echo "==> 采样"
 python -m neurolm generate \
   --config "$CONFIG" \
   --checkpoint "runs/${RUN_NAME}/final.npz" \
@@ -29,5 +29,5 @@ python -m neurolm generate \
   --temperature 0.8 \
   --top-k 40
 
-echo "==> Loss curve"
+echo "==> 损失曲线"
 python scripts/plot_history.py "runs/${RUN_NAME}/history.json"

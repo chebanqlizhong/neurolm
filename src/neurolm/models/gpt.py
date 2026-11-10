@@ -191,7 +191,7 @@ class GPT:
         batch, seq = idx.shape
         if seq > self.config.max_seq_len:
             raise ValueError(
-                f"sequence length {seq} exceeds max_seq_len {self.config.max_seq_len}"
+                f"序列长度 {seq} 超过了 max_seq_len {self.config.max_seq_len}"
             )
 
         positions = np.arange(seq)
