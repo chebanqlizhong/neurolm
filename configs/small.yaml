@@ -1,0 +1,41 @@
+# NeuroLM small configuration.
+#
+# A compact model that trains on a laptop CPU in a couple of minutes. Use it to
+# verify the pipeline end to end before scaling anything up.
+
+run_name: small
+out_dir: runs
+
+model:
+  vocab_size: 258        # 256 byte values + <bos> + <eos>
+  d_model: 96
+  n_heads: 4
+  n_layers: 3
+  d_ff: 384
+  max_seq_len: 96
+  dropout: 0.1
+  tie_embeddings: true
+
+data:
+  corpus_path: data/corpus.txt
+  val_split: 0.1
+  batch_size: 12
+  block_size: 96
+  seed: 1337
+
+train:
+  max_steps: 300
+  eval_interval: 50
+  eval_batches: 20
+  learning_rate: 3.0e-3
+  min_lr: 3.0e-4
+  warmup_steps: 40
+  weight_decay: 0.01
+  grad_clip: 1.0
+  beta1: 0.9
+  beta2: 0.99
+  eps: 1.0e-8
+  seed: 1337
+  device: cpu
+
+checkpoint_interval: 150

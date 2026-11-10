@@ -1,0 +1,34 @@
+The transformer is a neural network architecture built entirely on attention.
+Attention lets every position in a sequence look at every other position and
+decide how much each one matters. A language model trained on this idea learns
+to predict the next token given the tokens that came before it.
+
+Training a language model means minimizing the cross entropy between the
+predicted distribution over the next token and the token that actually appears.
+The optimizer walks the parameters downhill, one small step at a time. A cosine
+learning rate schedule warms up slowly, peaks, and then decays toward zero.
+
+A decoder only transformer stacks many identical blocks. Each block contains a
+causal self attention layer followed by a feed forward network. Layer
+normalization keeps activations well behaved and residual connections let
+gradients flow through deep stacks without vanishing.
+
+Text is first converted into tokens. A byte level tokenizer maps every character
+to a number between zero and two hundred fifty five, so any text in any language
+can be represented without ever producing an unknown token. The model then
+learns an embedding for each token and adds a learned position embedding.
+
+The training loop samples a batch of contiguous sequences, computes the loss,
+runs backpropagation, clips the gradients, and updates the weights. Every few
+steps it measures the validation loss so that overfitting can be detected early.
+Checkpoints are written to disk so that a long run can be resumed or sampled.
+
+Generating text is the reverse of training. We start from a prompt, feed it
+through the model, sample one token from the resulting distribution, append it,
+and repeat. Temperature controls how adventurous the sampling is. A low
+temperature makes the model repeat its most confident guesses, while a high
+temperature spreads probability across many possible continuations.
+
+A good experiment is reproducible. Fix the random seed, record the
+configuration, log the loss curve, and keep every artifact in a versioned
+directory. When results are surprising, the log is the first place to look.

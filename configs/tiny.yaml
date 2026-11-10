@@ -1,0 +1,41 @@
+# NeuroLM tiny configuration.
+#
+# The smallest configuration that still exercises every code path. Ideal for
+# unit tests, CI and quick sanity checks (a few seconds on CPU).
+
+run_name: tiny
+out_dir: runs
+
+model:
+  vocab_size: 258
+  d_model: 32
+  n_heads: 4
+  n_layers: 2
+  d_ff: 64
+  max_seq_len: 32
+  dropout: 0.0
+  tie_embeddings: true
+
+data:
+  corpus_path: data/corpus.txt
+  val_split: 0.1
+  batch_size: 8
+  block_size: 32
+  seed: 1337
+
+train:
+  max_steps: 50
+  eval_interval: 25
+  eval_batches: 5
+  learning_rate: 5.0e-3
+  min_lr: 5.0e-4
+  warmup_steps: 10
+  weight_decay: 0.0
+  grad_clip: 1.0
+  beta1: 0.9
+  beta2: 0.99
+  eps: 1.0e-8
+  seed: 1337
+  device: cpu
+
+checkpoint_interval: 25
